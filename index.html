@@ -161,7 +161,7 @@
             color: inherit;
         }
         
-        /* Estilo de óvalo/tarjeta redondeada según capturas */
+        /* Estilo de óvalo/tarjeta redondeada */
         .tarjeta-libro {
             background-color: #cce0ff;
             color: #000000;
@@ -360,13 +360,13 @@
     <div class="contenedor">
         
         <div id="inicio" class="seccion activa">
-            <h1 class="titulo-principal">📖La Bibiblioteca de Jadrian</h1>
+            <h1 class="titulo-principal">¼La Bibiblioteca de Jadrian</h1>
             <ul class="menu-lista">
                 <li onclick="navegar('buscar')">🔍Buscar Libros</li>
                 <li onclick="navegar('disponibles')">📚Libros disponibles</li>
                 <li onclick="navegar('pedir')">📎¿No encuentras un libro? Pidelo aqui</li>
                 <li onclick="navegar('info')">ℹ️Informacion sobre la Biblioteca</li>
-                <li onclick="navegar('admin')" style="border-top: 1px dashed #334155; margin-top: 15px; font-size: 16px; color: var(--texto-secundario);">🔧 Panel de Control (Admin)</li>
+                <li onclick="verificarAdmin()" style="border-top: 1px dashed #334155; margin-top: 15px; font-size: 16px; color: var(--texto-secundario);">🔧 Panel de Control (Admin)</li>
             </ul>
         </div>
 
@@ -395,6 +395,20 @@
                     </div>
                 </a>
 
+                <a href="https://drive.google.com/file/d/1IviqghxEd-uIlHZznhbEiGmzNsa2Unm2/view?usp=drivesdk" target="_blank" class="enlace-libro item-filtrable">
+                    <div class="tarjeta-libro">
+                        <strong class="lib-titulo">Piensa en Python</strong>
+                        <span class="lib-autor">Allen B. Downey</span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1eq4vklTCY8CxgsATzYIOSdx3Z2rJCSW7/view?usp=drivesdk" target="_blank" class="enlace-libro item-filtrable">
+                    <div class="tarjeta-libro">
+                        <strong class="lib-titulo">Leyra</strong>
+                        <span class="lib-autor">Pablo De Santis</span>
+                    </div>
+                </a>
+
                 <div id="mensaje-no-resultados">
                     No se encontraron libros. ¡Pídelo en la sección de sugerencias para que lo agreguemos!
                 </div>
@@ -417,6 +431,20 @@
                     <div class="tarjeta-libro">
                         <strong>La Tregua</strong>
                         <span>Mario Benedetti</span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1IviqghxEd-uIlHZznhbEiGmzNsa2Unm2/view?usp=drivesdk" target="_blank" class="enlace-libro">
+                    <div class="tarjeta-libro">
+                        <strong>Piensa en Python</strong>
+                        <span>Allen B. Downey</span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1eq4vklTCY8CxgsATzYIOSdx3Z2rJCSW7/view?usp=drivesdk" target="_blank" class="enlace-libro">
+                    <div class="tarjeta-libro">
+                        <strong>Leyra</strong>
+                        <span>Pablo De Santis</span>
                     </div>
                 </a>
             </div>
@@ -490,6 +518,16 @@
                     document.getElementById('input-busqueda').value = '';
                     filtrarLibros();
                 }
+            }
+        }
+
+        // Validación de contraseña para la sección administrativa
+        function verificarAdmin() {
+            const passwordInput = prompt("Introduce la contraseña de administrador para ingresar:");
+            if (passwordInput === "2026") {
+                navegar('admin');
+            } else if (passwordInput !== null) {
+                alert("Contraseña incorrecta. Acceso denegado.");
             }
         }
 
