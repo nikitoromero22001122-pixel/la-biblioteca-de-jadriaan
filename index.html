@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Biblioteca de Jadrian</title>
+    <title>La Bibiblioteca de Jadrian</title>
     <style>
-        /* Variables de color para un diseño oscuro con acentos neón/cian */
+        /* Paleta de colores: Fondo oscuro con acentos cian/azul neón */
         :root {
-            --bg-principal: #0b1120;
+            --bg-principal: #0b121f;
             --bg-tarjetas: rgba(30, 41, 59, 0.7);
-            --texto-principal: #f8fafc;
+            --texto-principal: #ffffff;
             --texto-secundario: #94a3b8;
             --acento-cian: #00f0ff;
+            --acento-azul-claro: #bcd9ff;
             --acento-hover: #38bdf8;
             --borde-sutil: rgba(0, 240, 255, 0.2);
+            --rojo-eliminar: #ef4444;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         body {
@@ -25,7 +31,6 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            /* Patrón sutil de fondo */
             background-image: radial-gradient(circle at top right, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
         }
 
@@ -36,7 +41,7 @@
             position: relative;
         }
 
-        /* Sistema de pestañas / secciones */
+        /* Sistema de pestañas y secciones animadas */
         .seccion {
             display: none;
             animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -46,11 +51,11 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Botones de navegación */
+        /* Botón Volver */
         .btn-volver {
             background: none;
             border: none;
@@ -70,13 +75,12 @@
             transform: translateX(-5px);
         }
 
-        /* --- MENÚ PRINCIPAL --- */
+        /* --- PANTALLA 1: MENÚ PRINCIPAL --- */
         .titulo-principal {
             text-align: center;
-            font-size: 38px;
-            margin-bottom: 60px;
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            letter-spacing: 1px;
+            font-size: 36px;
+            margin-bottom: 50px;
+            font-weight: bold;
         }
         
         .menu-lista {
@@ -84,31 +88,27 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            max-width: 500px;
+            gap: 25px;
+            max-width: 550px;
             margin: 0 auto;
         }
         
         .menu-lista li {
-            background: var(--bg-tarjetas);
-            border: 1px solid var(--borde-sutil);
+            background: transparent;
             border-radius: 12px;
-            padding: 20px 25px;
-            font-size: 20px;
+            padding: 15px 10px;
+            font-size: 22px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 15px;
-            backdrop-filter: blur(5px);
         }
         
         .menu-lista li:hover {
-            border-color: var(--acento-cian);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
-            transform: translateY(-3px);
-            color: var(--acento-cian);
+            color: var(--acento-hover);
+            transform: translateX(5px);
         }
 
         /* --- COMÚN SECCIONES --- */
@@ -116,25 +116,18 @@
             text-align: center;
             font-size: 32px;
             margin-bottom: 40px;
-            color: var(--acento-cian);
         }
 
-        /* --- BÚSQUEDA --- */
+        /* --- PANTALLA 2: BÚSQUEDA Y DISPONIBLES --- */
         .barra-busqueda {
-            background: var(--bg-tarjetas);
-            border: 1px solid var(--borde-sutil);
-            border-radius: 30px;
-            padding: 15px 25px;
+            background: transparent;
+            border-bottom: 2px solid #334155;
+            padding: 10px 0;
             font-size: 18px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: border-color 0.3s;
-        }
-        .barra-busqueda:focus-within {
-            border-color: var(--acento-cian);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
         .barra-busqueda input {
             background: transparent;
@@ -144,151 +137,220 @@
             outline: none;
             width: 100%;
         }
-
-        .sugerencias-grid, .libros-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+        .barra-busqueda input::placeholder {
+            color: var(--texto-secundario);
         }
 
-        /* Tarjetas de enlaces (Libros) */
+        .subtitulo-sugerencias {
+            font-size: 20px;
+            color: var(--texto-principal);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .libros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
         .enlace-libro {
             text-decoration: none;
             color: inherit;
-            display: block;
         }
         
+        /* Estilo de óvalo/tarjeta redondeada según capturas */
         .tarjeta-libro {
-            background: var(--bg-tarjetas);
-            border: 1px solid var(--borde-sutil);
-            border-radius: 16px;
-            padding: 25px;
+            background-color: #cce0ff;
+            color: #000000;
+            border-radius: 50px;
+            padding: 20px 30px;
             text-align: center;
-            cursor: pointer;
             transition: all 0.3s ease;
-            height: 100%;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            min-height: 90px;
         }
         
         .tarjeta-libro:hover {
-            background: rgba(0, 240, 255, 0.05);
-            border-color: var(--acento-cian);
-            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.1);
-            transform: translateY(-5px);
+            transform: scale(1.04);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
         }
 
         .tarjeta-libro strong {
             display: block;
-            font-size: 20px;
-            color: var(--acento-cian);
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 4px;
         }
         
         .tarjeta-libro span {
-            color: var(--texto-secundario);
-            font-size: 16px;
+            font-size: 15px;
+            opacity: 0.8;
         }
 
-        /* --- FORMULARIO PEDIR LIBRO --- */
+        .oculto {
+            display: none !important;
+        }
+
+        #mensaje-no-resultados {
+            text-align: center;
+            color: var(--texto-secundario);
+            font-size: 16px;
+            display: none;
+            grid-column: 1 / -1;
+            padding: 20px;
+        }
+
+        /* --- PANTALLA 3: PEDIR LIBRO --- */
         .subtitulo-pedir {
             text-align: center;
-            margin-top: -20px;
             margin-bottom: 40px;
             color: var(--texto-secundario);
-            font-size: 18px;
+            font-size: 16px;
         }
         
         #form-pedir-libro {
-            background: var(--bg-tarjetas);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid var(--borde-sutil);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .formulario-grupo {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
         }
         .formulario-grupo label {
-            font-size: 16px;
-            color: var(--acento-cian);
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
         }
         .formulario-grupo input {
             background: transparent;
             border: none;
-            border-bottom: 2px solid #334155;
+            border-bottom: 1px solid white;
             color: white;
             font-size: 18px;
-            padding: 8px 0;
+            padding: 5px 0;
             outline: none;
-            transition: border-color 0.3s;
-        }
-        .formulario-grupo input:focus {
-            border-bottom-color: var(--acento-cian);
+            flex: 1;
         }
         
-        .btn-enviar {
-            background-color: transparent;
-            color: var(--acento-cian);
-            border: 2px solid var(--acento-cian);
-            border-radius: 8px;
-            padding: 12px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .btn-enviar:hover {
-            background-color: var(--acento-cian);
-            color: var(--bg-principal);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        .contenedor-btn-enviar {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
         }
 
-        /* --- INFORMACIÓN --- */
-        .info-container {
-            background: var(--bg-tarjetas);
-            border: 1px solid var(--borde-sutil);
-            border-radius: 16px;
-            padding: 40px;
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-        .info-texto {
-            flex: 1;
+        .btn-enviar {
+            background-color: #555555;
+            color: white;
+            border: none;
+            padding: 10px 25px;
             font-size: 18px;
-            line-height: 1.7;
-            color: var(--texto-principal);
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-        .info-texto p {
-            margin-bottom: 20px;
+        .btn-enviar:hover {
+            background-color: #777777;
         }
-        .info-texto strong {
-            color: var(--acento-cian);
+
+        /* --- PANTALLA 4: INFORMACIÓN --- */
+        .info-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            margin-top: 20px;
+            line-height: 1.6;
+            font-size: 18px;
         }
-        .iconos-info {
-            flex: 0.5;
-            font-size: 60px;
+        .info-izq p {
+            margin-bottom: 25px;
+        }
+        .info-der {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            gap: 30px;
+            text-align: center;
+        }
+        .info-iconos {
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            font-size: 70px;
+            margin-top: 20px;
         }
 
-        @media (max-width: 600px) {
-            .info-container {
+        /* --- PANTALLA 5: PANEL DE CONTROL ADMIN --- */
+        .admin-tabla-contenedor {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--borde-sutil);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .solicitud-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .solicitud-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            color: var(--acento-cian);
+        }
+        .solicitud-info p {
+            margin: 3px 0;
+            font-size: 14px;
+            color: var(--texto-secundario);
+        }
+        .solicitud-info .comentario-texto {
+            color: #e2e8f0;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        .btn-eliminar {
+            background-color: var(--rojo-eliminar);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .btn-eliminar:hover {
+            opacity: 0.8;
+        }
+        #lista-vacia-mensaje {
+            text-align: center;
+            color: var(--texto-secundario);
+            padding: 30px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 650px) {
+            .info-layout {
+                grid-template-columns: 1fr;
+            }
+            .formulario-grupo {
                 flex-direction: column;
-                text-align: center;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .formulario-grupo input {
+                width: 100%;
             }
         }
     </style>
@@ -298,50 +360,56 @@
     <div class="contenedor">
         
         <div id="inicio" class="seccion activa">
-            <h1 class="titulo-principal">📖 La Biblioteca de Jadrian</h1>
+            <h1 class="titulo-principal">📖La Bibiblioteca de Jadrian</h1>
             <ul class="menu-lista">
-                <li onclick="navegar('buscar')">🔍 Buscar Libros</li>
-                <li onclick="navegar('disponibles')">📚 Libros disponibles</li>
-                <li onclick="navegar('pedir')">📎 ¿No encuentras un libro? Pídelo aquí</li>
-                <li onclick="navegar('info')">ℹ️ Información sobre la Biblioteca</li>
+                <li onclick="navegar('buscar')">🔍Buscar Libros</li>
+                <li onclick="navegar('disponibles')">📚Libros disponibles</li>
+                <li onclick="navegar('pedir')">📎¿No encuentras un libro? Pidelo aqui</li>
+                <li onclick="navegar('info')">ℹ️Informacion sobre la Biblioteca</li>
+                <li onclick="navegar('admin')" style="border-top: 1px dashed #334155; margin-top: 15px; font-size: 16px; color: var(--texto-secundario);">🔧 Panel de Control (Admin)</li>
             </ul>
         </div>
 
         <div id="buscar" class="seccion">
             <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
-            <h2 class="titulo-seccion">🔍 Búsqueda</h2>
+            <h2 class="titulo-seccion">🔍Barra de busqueda</h2>
             
             <div class="barra-busqueda">
-                📖 <input type="text" placeholder="Buscar un libro, autor o categoría...">
+                📖 <input type="text" id="input-busqueda" placeholder="Buscar un libro, autor o categoria..." onkeyup="filtrarLibros()">
             </div>
             
-            <h3 style="color: var(--texto-secundario); text-align: center; margin-top: 40px;">💬 Sugerencias rápidas</h3>
-            <div class="sugerencias-grid">
-                <a href="https://drive.google.com/file/d/0B2V3UrRIXRl1STVZSVdNaDdwcXM/view?usp=drivesdk&resourcekey=0-hit5mdikVnuz7pn5MsZ2wQ" target="_blank" class="enlace-libro">
+            <div class="subtitulo-sugerencias">💬Sugerencias</div>
+            
+            <div class="libros-grid" id="contenedor-busqueda-grid">
+                <a href="https://drive.google.com/file/d/0B2V3UrRIXRl1STVZSVdNaDdwcXM/view?usp=drivesdk&resourcekey=0-hit5mdikVnuz7pn5MsZ2wQ" target="_blank" class="enlace-libro item-filtrable">
                     <div class="tarjeta-libro">
-                        <strong>100 Años de soledad</strong>
-                        <span>Gabriel García Márquez</span>
+                        <strong class="lib-titulo">100 Años de soledad</strong>
+                        <span class="lib-autor">Garcia Marques</span>
                     </div>
                 </a>
                 
-                <a href="https://drive.google.com/file/d/0B2V3UrRIXRl1eFNPYzRtSndCLUU/view?usp=drivesdk&resourcekey=0-KTdjhEw-gy1tO-n676BplQ" target="_blank" class="enlace-libro">
+                <a href="https://drive.google.com/file/d/0B2V3UrRIXRl1eFNPYzRtSndCLUU/view?usp=drivesdk&resourcekey=0-KTdjhEw-gy1tO-n676BplQ" target="_blank" class="enlace-libro item-filtrable">
                     <div class="tarjeta-libro">
-                        <strong>La Tregua</strong>
-                        <span>Mario Benedetti</span>
+                        <strong class="lib-titulo">La Tregua</strong>
+                        <span class="lib-autor">Mario Benedetti</span>
                     </div>
                 </a>
+
+                <div id="mensaje-no-resultados">
+                    No se encontraron libros. ¡Pídelo en la sección de sugerencias para que lo agreguemos!
+                </div>
             </div>
         </div>
 
         <div id="disponibles" class="seccion">
             <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
-            <h2 class="titulo-seccion">📚 Libros disponibles</h2>
+            <h2 class="titulo-seccion">📚Libros disponibles</h2>
             
             <div class="libros-grid">
                 <a href="https://drive.google.com/file/d/0B2V3UrRIXRl1STVZSVdNaDdwcXM/view?usp=drivesdk&resourcekey=0-hit5mdikVnuz7pn5MsZ2wQ" target="_blank" class="enlace-libro">
                     <div class="tarjeta-libro">
                         <strong>100 Años de soledad</strong>
-                        <span>Gabriel García Márquez</span>
+                        <span>Garcia Marques</span>
                     </div>
                 </a>
                 
@@ -351,70 +419,196 @@
                         <span>Mario Benedetti</span>
                     </div>
                 </a>
-                
-                <div class="tarjeta-libro" style="border: 1px dashed var(--texto-secundario); cursor: default; opacity: 0.5;">
-                    <strong>Más libros...</strong>
-                    <span>Próximamente</span>
-                </div>
             </div>
         </div>
 
         <div id="pedir" class="seccion">
             <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
-            <h2 class="titulo-seccion">🌟 Pide tu libro aquí</h2>
-            <p class="subtitulo-pedir">¿No encuentras tu libro? Pídelo aquí y cuando podamos lo agregamos</p>
+            <h2 class="titulo-seccion">☀️Pide tu libro aqui</h2>
+            <p class="subtitulo-pedir">No encuentras tu libro,, pidelo aqui y cuando puedamos lo agregamos</p>
             
-            <form id="form-pedir-libro" onsubmit="event.preventDefault(); alert('Solicitud enviada a la base de datos (Simulación)');">
+            <form id="form-pedir-libro">
                 <div class="formulario-grupo">
                     <label>Nombre del libro:</label>
-                    <input type="text" placeholder="Ej: El Psicoanalista" required>
+                    <input type="text" id="ins-titulo" required>
                 </div>
                 <div class="formulario-grupo">
                     <label>Autor (opcional):</label>
-                    <input type="text" placeholder="Ej: John Katzenbach">
+                    <input type="text" id="ins-autor">
                 </div>
                 <div class="formulario-grupo">
                     <label>Comentario (opcional):</label>
-                    <input type="text" placeholder="¿Alguna edición en específico?">
+                    <input type="text" id="ins-comentario">
                 </div>
-                <button type="submit" class="btn-enviar">Enviar solicitud</button>
+                <div class="contenedor-btn-enviar">
+                    <button type="submit" class="btn-enviar" id="btn-registro">Enviar solicitud</button>
+                </div>
             </form>
         </div>
 
         <div id="info" class="seccion">
             <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
-            <h2 class="titulo-seccion">ℹ️ Información de la biblioteca</h2>
+            <h2 class="titulo-seccion">ℹ️Informacion de la biblioteca</h2>
             
-            <div class="info-container">
-                <div class="info-texto">
-                    <p>Esta pequeña biblioteca fue creada con el propósito de que los usuarios de la comunidad de <strong>Jadrian</strong> puedan encontrar sus libros fácilmente.</p>
-                    <p>Este pequeño proyecto empezó la noche del 13 de Junio por aburrimiento del admin de la nube, sin la autorización de Jadriel.</p>
-                    <p style="color: var(--acento-cian); margin-top: 30px; text-align: center;"><em>Espero que este proyecto tenga el apoyo de los miembros de esta comunidad.</em></p>
+            <div class="info-layout">
+                <div class="info-izq">
+                    <p>Esta pequeña biblioteca fue creada con el propocito que los usuarios de la comunidad de Jadrian puedan encontrar sus libros.</p>
+                    <p>Esta pequeño proyecto empezo la noche del 13 de Junio por aburrimiento del admin de la nube, sin la autorizacion de Jadriel.</p>
                 </div>
-                <div class="iconos-info">
-                    💡
-                    📖
+                <div class="info-der">
+                    <p><strong>Espero que este proyecto tenga el apoyo de los miembros de esta comunidad</strong></p>
+                    <div class="info-iconos">
+                        💡
+                        📖
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="admin" class="seccion">
+            <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
+            <h2 class="titulo-seccion">🔧 Panel de Administración</h2>
+            <p style="text-align: center; color: var(--texto-secundario); margin-top: -20px;">Aquí puedes ver e ir limpiando los libros que solicita el nivel111.</p>
+            
+            <div class="admin-tabla-contenedor">
+                <div id="lista-vacia-mensaje">Cargando solicitudes...</div>
+                <div id="contenedor-solicitudes"></div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Sistema de navegación
-        function navegar(idSeccionDestino) {
-            const secciones = document.querySelectorAll('.seccion');
-            secciones.forEach(seccion => {
-                seccion.classList.remove('activa');
-            });
-
-            const seccionDestino = document.getElementById(idSeccionDestino);
-            if (seccionDestino) {
-                seccionDestino.classList.add('activa');
-                // Un pequeño scroll hacia arriba por si el usuario estaba abajo en móvil
+        function navegar(idSeccion) {
+            document.querySelectorAll('.seccion').forEach(sec => sec.classList.remove('activa'));
+            const destino = document.getElementById(idSeccion);
+            if (destino) {
+                destino.classList.add('activa');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                if(idSeccion === 'buscar') {
+                    document.getElementById('input-busqueda').value = '';
+                    filtrarLibros();
+                }
             }
         }
+
+        function filtrarLibros() {
+            const consulta = document.getElementById('input-busqueda').value.toLowerCase();
+            const tarjetas = document.querySelectorAll('.item-filtrable');
+            const mensajeError = document.getElementById('mensaje-no-resultados');
+            let encontrados = 0;
+
+            tarjetas.forEach(tarjeta => {
+                const titulo = tarjeta.querySelector('.lib-titulo').innerText.toLowerCase();
+                const autor = tarjeta.querySelector('.lib-autor').innerText.toLowerCase();
+
+                if (titulo.includes(consulta) || autor.includes(consulta)) {
+                    tarjeta.classList.remove('oculto');
+                    encontrados++;
+                } else {
+                    tarjeta.classList.add('oculto');
+                }
+            });
+
+            mensajeError.style.display = (encontrados === 0) ? 'block' : 'none';
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Configuración con tu URL real de Realtime Database
+        const firebaseConfig = {
+            databaseURL: "https://la-biblioteca-de-jadrian-default-rtdb.firebaseio.com/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const nodoPeticiones = ref(database, 'peticiones_libros');
+
+        // 1. ESCUCHAR Y ENVIAR PROPUESTAS DESDE EL FORMULARIO
+        document.getElementById('form-pedir-libro').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const t = document.getElementById('ins-titulo').value;
+            const a = document.getElementById('ins-autor').value;
+            const c = document.getElementById('ins-comentario').value;
+            const btn = document.getElementById('btn-registro');
+
+            btn.innerText = "Enviando...";
+            btn.disabled = true;
+
+            const nuevaPeticionRef = push(nodoPeticiones);
+            set(nuevaPeticionRef, {
+                titulo: t,
+                autor: a || "No indicado",
+                comentario: c || "Sin comentarios",
+                fecha: new Date().toLocaleString()
+            })
+            .then(() => {
+                alert("¡Propuesta enviada a la base de datos con éxito!");
+                document.getElementById('form-pedir-libro').reset();
+                navegar('inicio');
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Ocurrió un error al procesar.");
+            })
+            .finally(() => {
+                btn.innerText = "Enviar solicitud";
+                btn.disabled = false;
+            });
+        });
+
+        // 2. LEER SOLICITUDES EN TIEMPO REAL PARA EL PANEL DE ADMIN
+        const contenedorSolicitudes = document.getElementById('contenedor-solicitudes');
+        const mensajeVacio = document.getElementById('lista-vacia-mensaje');
+
+        onValue(nodoPeticiones, (snapshot) => {
+            contenedorSolicitudes.innerHTML = "";
+            const data = snapshot.val();
+
+            if (!data) {
+                mensajeVacio.style.display = "block";
+                mensajeVacio.innerText = "No hay solicitudes pendientes actualmente.";
+                return;
+            }
+
+            mensajeVacio.style.display = "none";
+
+            // Recorrer todas las peticiones guardadas
+            Object.keys(data).forEach(id => {
+                const item = data[id];
+
+                const div = document.createElement('div');
+                div.className = 'solicitud-item';
+                div.innerHTML = `
+                    <div class="solicitud-info">
+                        <h4>📘 ${item.titulo}</h4>
+                        <p><strong>Autor:</strong> ${item.autor}</p>
+                        <p class="comentario-texto"><strong>Nota:</strong> ${item.comentario}</p>
+                        <p style="font-size: 11px; opacity: 0.6; margin-top: 5px;">Enviado: ${item.fecha}</p>
+                    </div>
+                    <button class="btn-eliminar" data-id="${id}">Completar / Eliminar</button>
+                `;
+
+                contenedorSolicitudes.appendChild(div);
+            });
+
+            // Asignar funciones a los botones de eliminar dinámicamente
+            document.querySelectorAll('.btn-eliminar').forEach(boton => {
+                boton.addEventListener('click', function() {
+                    const idEliminar = this.getAttribute('data-id');
+                    if (confirm("¿Quieres eliminar esta propuesta de la lista?")) {
+                        remove(ref(database, 'peticiones_libros/' + idEliminar))
+                        .then(() => alert("Solicitud quitada."))
+                        .catch(err => console.error("Error al borrar: ", err));
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
