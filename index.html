@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Biblioteca de Jadrian</title>
+    <style>
+        /* Estilos generales y paleta de colores oscuros */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #111827; /* Fondo azul oscuro/grisáceo */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Ocultar secciones no activas */
+        .seccion {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .seccion.activa {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Botón para volver atrás */
+        .btn-volver {
+            background: none;
+            border: none;
+            color: #60a5fa; /* Acento celeste */
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+        .btn-volver:hover {
+            text-decoration: underline;
+        }
+
+        /* --- PANTALLA 1: INICIO --- */
+        .titulo-principal {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+        }
+        .menu-lista {
+            list-style: none;
+            padding: 0;
+            margin-left: 10%;
+        }
+        .menu-lista li {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .menu-lista li:hover {
+            color: #bfdbfe;
+        }
+
+        /* --- PANTALLA 2: BÚSQUEDA --- */
+        .titulo-seccion {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        .barra-busqueda {
+            font-size: 18px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .barra-busqueda input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            outline: none;
+            width: 100%;
+        }
+        .sugerencias-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+        .pildora {
+            background-color: #bfdbfe; /* Celeste claro */
+            color: black;
+            border-radius: 40px;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .pildora strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- PANTALLA 3: PEDIR LIBRO --- */
+        .subtitulo-pedir {
+            margin-bottom: 40px;
+            font-size: 16px;
+            color: #e5e7eb;
+        }
+        .formulario-grupo {
+            margin-bottom: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .formulario-grupo label {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .formulario-grupo input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid white;
+            color: white;
+            font-size: 18px;
+            width: 100%;
+            outline: none;
+            padding-bottom: 5px;
+        }
+        .btn-enviar {
+            background-color: #8c8c8c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            float: right;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-enviar:hover {
+            background-color: #737373;
+        }
+
+        /* --- PANTALLA 4: INFORMACIÓN --- */
+        .info-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            align-items: flex-start;
+        }
+        .info-texto-izq {
+            flex: 1;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .info-texto-der {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+        }
+        .iconos-info {
+            font-size: 80px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        
+        <div id="inicio" class="seccion activa">
+            <h1 class="titulo-principal">📖 La Bibiblioteca de Jadrian</h1>
+            <ul class="menu-lista">
+                <li onclick="navegar('buscar')">🔍 Buscar Libros</li>
+                <li>📚 Libros disponibles</li>
+                <li onclick="navegar('pedir')">📎 ¿No encuentras un libro? Pidelo aqui</li>
+                <li onclick="navegar('info')">ℹ️ Informacion sobre la Biblioteca</li>
+            </ul>
+        </div>
+
+        <div id="buscar" class="seccion">
+            <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
+            <h2 class="titulo-seccion">🔍 Barra de busqueda</h2>
+            
+            <div class="barra-busqueda">
+                📖 Buscar un libro, autor o categoria...
+            </div>
+            
+            <h3>💬 Sugerencias</h3>
+            <div class="sugerencias-grid">
+                <div class="pildora">
+                    <strong>100 Años de soledad</strong>
+                    Garcia Marques
+                </div>
+                <div class="pildora">
+                    <strong>La Tregua</strong>
+                    Mario Benedetti
+                </div>
+            </div>
+        </div>
+
+        <div id="pedir" class="seccion">
+            <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
+            <h2 class="titulo-seccion">🌟 Pide tu libro aqui</h2>
+            <p class="subtitulo-pedir">No encuentras tu libro,, pidelo aqui y cuando podamos lo agregamos</p>
+            
+            <form id="form-pedir-libro" onsubmit="event.preventDefault(); alert('Solicitud enviada (Simulación)');">
+                <div class="formulario-grupo">
+                    <label>Nombre del libro:</label>
+                    <input type="text" required>
+                </div>
+                <div class="formulario-grupo">
+                    <label>Autor (opcional):</label>
+                    <input type="text">
+                </div>
+                <div class="formulario-grupo">
+                    <label>Comentario (opcional):</label>
+                    <input type="text">
+                </div>
+                <button type="submit" class="btn-enviar">Enviar solicitud</button>
+            </form>
+        </div>
+
+        <div id="info" class="seccion">
+            <button class="btn-volver" onclick="navegar('inicio')">← Volver al inicio</button>
+            <h2 class="titulo-seccion">ℹ️ Informacion de la biblioteca</h2>
+            
+            <div class="info-container">
+                <div class="info-texto-izq">
+                    Esta pequeña biblioteca fue creada con el propocito que los usuarios de la comunidad de Jadrian puedan encontrar sus libros.<br><br>
+                    Esta pequeño proyecto empezo la noche del 13 de Junio por aburrimiento del admin de la nube, sin la autorizacion de Jadriel.
+                </div>
+                <div class="info-texto-der">
+                    Espero que este proyecto tenga el apoyo de los miembros de esta comunidad
+                    <div class="iconos-info">
+                        💡 📖
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Función para alternar entre las pantallas cambiando la clase CSS
+        function navegar(idSeccionDestino) {
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(seccion => {
+                seccion.classList.remove('activa');
+            });
+
+            // Mostrar solo la sección solicitada
+            const seccionDestino = document.getElementById(idSeccionDestino);
+            if (seccionDestino) {
+                seccionDestino.classList.add('activa');
+            }
+        }
+    </script>
+</body>
+</html>
